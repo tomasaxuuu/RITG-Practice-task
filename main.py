@@ -173,6 +173,13 @@ try:
         else:
             print("---- Все ожидаемые PHP-функции найдены в index.php ----")
 
+        # Проверка наличия формы заказа
+        order_form = soup.find('form', {'class': 'order_form'})
+        if order_form:
+            print("---- Форма заказа найдена ----")
+        else:
+            print("---- Форма заказа не найдена ----")
+
     # Закрытие SFTP-сессии
     sftp.close()
 
