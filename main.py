@@ -148,13 +148,14 @@ try:
             print("---- Конфигурация оффера не найдена в index.php ----")
 
         # Выводим найденные названия функций PHP
-        found_php_functions = []
+        found_php_functions = set()
 
         for php_tag in php_tags:
             # Удаление лишних пробелов и переносов строк из текста между <?php и ?>
             php_function = php_tag.strip()
             if php_function:
-                found_php_functions.append(php_function.split('(')[0].strip())  # Получаем имя функции
+                function_name = php_function.split('(')[0].strip()  # Получаем имя функции
+                found_php_functions.add(function_name)
 
         if found_php_functions:
             print("---- Найденные PHP-функции в index.php ----")
@@ -179,6 +180,13 @@ try:
             print("---- Форма заказа найдена ----")
         else:
             print("---- Форма заказа не найдена ----")
+
+        # Проверка наличия фото товара
+        product_image_match = re.search(r'<\?php\s*getImgPath\(\);\s*\?>\s*product\.png', php_content)
+        if product_image_match:
+            print("---- Фото товара найдено ----")
+        else:
+            print("---- Фото товара не найдено ----")
 
     # Закрытие SFTP-сессии
     sftp.close()
